@@ -21,5 +21,5 @@ Before you begin, ensure you have met the following requirements:
 Clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/wallacecs007/nylas-accounts-extractor.git
+git clone https://github.com/nylas-samples/nylas-accounts-extractor.git
 cd nylas-accounts-extractor
