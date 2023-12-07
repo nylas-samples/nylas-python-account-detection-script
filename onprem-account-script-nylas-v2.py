@@ -44,8 +44,8 @@ def main():
             break
 
         for account in accounts:
-            if account['provider'] == 'microsoft' and account['authentication_type'] == 'password':
-                domain = account['email_address'].split('@')[-1]
+            if (account['provider'] == 'ews' or account['provider'] == 'eas') and account['authentication_type'] == 'password':
+                domain = account['email'].split('@')[-1]
                 if domain not in personal_microsoft_domains:
                     all_accounts.append(account)
 
@@ -61,6 +61,7 @@ def main():
             writer = csv.DictWriter(file, fieldnames=all_accounts[0].keys())
             writer.writeheader()
             writer.writerows(all_accounts)
+            print(f'Found {all_accounts.__len__()}')
     else:
         print("No accounts found")
 
