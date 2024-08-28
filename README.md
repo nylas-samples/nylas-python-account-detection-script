@@ -23,3 +23,15 @@ Clone the repository to your local machine:
 ```bash
 git clone https://github.com/nylas-samples/nylas-accounts-extractor.git
 cd nylas-accounts-extractor
+pip install requests
+python nylas_accounts_extractor.py
+```
+
+### Docker way to run the script
+```bash
+git clone https://github.com/nylas-samples/nylas-accounts-extractor.git
+cd nylas-accounts-extractor
+docker run -it --rm --name my-running-script -v "$PWD":/usr/src/myapp -w /usr/src/myapp python:3 bash
+pip install requests
+python nylas_accounts_extractor.py
+```

@@ -2,6 +2,7 @@ import requests
 import time
 import csv
 import base64
+import hashlib
 
 # Configuration
 client_id = 'YOUR CLIENT ID'  # Replace with your actual client ID
@@ -19,6 +20,9 @@ headers = {
     'Authorization': f'Basic {auth_string}',
     'Content-Type': 'application/json'
 }
+# List of obfuscated domains.
+# This is to ensure that the same domain is obfuscated the same way
+obfuscated_domains = {}
 
 # Function to get accounts from Nylas
 def get_accounts(offset):
@@ -32,6 +36,17 @@ def get_accounts(offset):
     else:
         print(f"Error fetching accounts: {response.text}")
         return None
+
+# Add a function to obfuscate the email address
+def obfuscate_address(email):
+    domain = email.split('@')[-1]
+    if obfuscated_domains.get(domain):
+        return f'xxx@{obfuscated_domains.get(domain)}'
+    else:
+        hiden = f"domain{abs(hash(domain)) % (10 ** 8)}"
+        obfuscated_domains[domain] = hiden
+        return f'xxx@{hiden}'
+
 
 # Main script
 def main():
@@ -47,6 +62,7 @@ def main():
             if (account['provider'] == 'ews' or account['provider'] == 'eas') and account['authentication_type'] == 'password':
                 domain = account['email'].split('@')[-1]
                 if domain not in personal_microsoft_domains:
+                    account['obfuscated_email'] = obfuscate_address(account['email'])
                     all_accounts.append(account)
 
         offset += request_limit
